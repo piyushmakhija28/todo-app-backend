@@ -9,9 +9,11 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.techdeveloper.todo.entity.Task;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
 @JsonInclude(value = Include.NON_NULL)
+@NoArgsConstructor
 public class TaskDto implements Serializable {
 
 	/**
