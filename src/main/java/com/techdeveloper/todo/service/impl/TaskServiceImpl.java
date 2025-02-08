@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import com.techdeveloper.todo.constants.ServiceMessages;
 import com.techdeveloper.todo.dto.ApiResponseDto;
 import com.techdeveloper.todo.dto.TaskDto;
 import com.techdeveloper.todo.entity.Task;
@@ -27,7 +28,7 @@ class TaskServiceImpl implements TaskServices {
 		task.setTitle(taskForm.getTitle());
 		task.setDescription(taskForm.getDescription());
 		taskRepository.save(task);
-		return new ApiResponseDto<>(null, "Task created successfully.", true, HttpStatus.CREATED.value(),
+		return new ApiResponseDto<>(null, ServiceMessages.TASK_CREATED_SUCCESSFULLY, true, HttpStatus.CREATED.value(),
 				System.currentTimeMillis());
 	}
 
@@ -39,10 +40,10 @@ class TaskServiceImpl implements TaskServices {
 			task.setTitle(taskForm.getTitle());
 			task.setDescription(taskForm.getDescription());
 			taskRepository.save(task);
-			return new ApiResponseDto<>(null, "Task updated successfully.", true, HttpStatus.OK.value(),
+			return new ApiResponseDto<>(null, ServiceMessages.TASK_UPDATED_SUCCESSFULLY, true, HttpStatus.OK.value(),
 					System.currentTimeMillis());
 		}
-		return new ApiResponseDto<>(null, "Task not found.", false, HttpStatus.NOT_FOUND.value(),
+		return new ApiResponseDto<>(null, ServiceMessages.TASK_NOT_FOUND, false, HttpStatus.NOT_FOUND.value(),
 				System.currentTimeMillis());
 	}
 
@@ -50,23 +51,23 @@ class TaskServiceImpl implements TaskServices {
 	public ApiResponseDto<TaskDto> getTask(Long id) {
 		Optional<Task> taskOptional = taskRepository.findById(id);
 		if (taskOptional.isPresent()) {
-			return new ApiResponseDto<>(new TaskDto(taskOptional.get()), "Task found successfully.", true, HttpStatus.OK.value(),
+			return new ApiResponseDto<>(new TaskDto(taskOptional.get()), ServiceMessages.TASK_FOUND_SUCCESSFULLY, true, HttpStatus.OK.value(),
 					System.currentTimeMillis());
 		}
-		return new ApiResponseDto<>(null, "Task not found.", false, HttpStatus.NOT_FOUND.value(),
+		return new ApiResponseDto<>(null, ServiceMessages.TASK_NOT_FOUND, false, HttpStatus.NOT_FOUND.value(),
 				System.currentTimeMillis());
 	}
 
 	@Override
 	public ApiResponseDto<List<TaskDto>> getTaskList() {
-		return new ApiResponseDto<>(taskRepository.findAll().stream().map(TaskDto::new).toList(), "Task list fetched successfully.", true, HttpStatus.OK.value(),
+		return new ApiResponseDto<>(taskRepository.findAll().stream().map(TaskDto::new).toList(), ServiceMessages.TASK_LIST_FETCHED_SUCCESSFULLY, true, HttpStatus.OK.value(),
 				System.currentTimeMillis());
 	}
 
 	@Override
 	public ApiResponseDto<Void> deleteTask(Long id) {
 		taskRepository.deleteById(id);
-		return new ApiResponseDto<>(null, "Task deleted successfully.", true, HttpStatus.OK.value(),
+		return new ApiResponseDto<>(null, ServiceMessages.TASK_DELETED_SUCCESSFULLY, true, HttpStatus.OK.value(),
 				System.currentTimeMillis());
 	}
 
